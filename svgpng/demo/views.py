@@ -1,13 +1,17 @@
 # Create your views here.
 
-from django.template.loader import get_template
-from django.template import Context
-from django.http import HttpResponse
+from django import forms
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 import math
 import cairocffi as cairo
 import io
 
 WIDTH, HEIGHT = 256, 256
+
+
+class TestForm(forms.Form):
+    pass
 
 
 def home(request):
@@ -17,9 +21,19 @@ def home(request):
         'height': HEIGHT,
         'body': svg(WIDTH, HEIGHT),
     }
-    t = get_template('home.html')
-    html = t.render(Context({'svg': img}))
-    return HttpResponse(html)
+
+    if request.method == 'POST':
+        form = TestForm(request.POST)
+        if form.is_valid():
+            # button was pushed
+            # save the file
+            return 1/0
+    else:
+        form = TestForm()
+
+    return render_to_response('home.html',
+                              {'form': form, 'svg': img},
+                              context_instance=RequestContext(request))
 
 
 def svg(width, height):

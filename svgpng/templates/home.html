@@ -8,4 +8,10 @@
 <svg width="{{ svg.width }}" height="{{ svg.height }}">
   {% autoescape off %}{{ svg.body }}{% endautoescape %}
 </svg>
+
+<form action="/" method="post">{% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Save as PNG" />
+</form>
+
 {% endblock %}
