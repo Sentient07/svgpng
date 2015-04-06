@@ -1,5 +1,7 @@
 # Create your views here.
 
+from django.template.loader import get_template
+from django.template import Context
 from django.http import HttpResponse
 import math
 import cairocffi as cairo
@@ -8,12 +10,24 @@ import io
 WIDTH, HEIGHT = 256, 256
 
 
-def demo(request):
+def home(request):
+    img = {
+        'title': "SVG Title",
+        'width': WIDTH,
+        'height': HEIGHT,
+        'body': svg(WIDTH, HEIGHT),
+    }
+    t = get_template('home.html')
+    html = t.render(Context({'svg': img}))
+    return HttpResponse(html)
+
+
+def svg(width, height):
     imageData = io.BytesIO()
-    surface = cairo.SVGSurface(imageData, WIDTH, HEIGHT)
+    surface = cairo.SVGSurface(imageData, width, height)
     ctx = cairo.Context(surface)
 
-    ctx.scale(WIDTH, HEIGHT)
+    ctx.scale(width, height)
 
     pat = cairo.LinearGradient(0.0, 0.0, 0.0, 1.0)
     pat.add_color_stop_rgba(1, 0.7, 0, 0, 0.5)
@@ -37,7 +51,4 @@ def demo(request):
 
     surface.finish()
 
-    output = imageData.getvalue()
-
-    response = HttpResponse(imageData.getvalue(), mimetype='image/svg+xml')
-    return response
+    return imageData.getvalue()

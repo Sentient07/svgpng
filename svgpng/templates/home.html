@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}{{ svg.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ svg.title }}</h1>
+
+<svg width="{{ svg.width }}" height="{{ svg.height }}">
+  {% autoescape off %}{{ svg.body }}{% endautoescape %}
+</svg>
+{% endblock %}
