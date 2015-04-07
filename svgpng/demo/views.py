@@ -1,11 +1,13 @@
 # Create your views here.
 
 from django import forms
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 import math
 import cairocffi as cairo
 import io
+from cairosvg import svg2png
 
 WIDTH, HEIGHT = 256, 256
 
@@ -15,24 +17,23 @@ class TestForm(forms.Form):
 
 
 def home(request):
-    img = {
-        'title': "SVG Title",
-        'width': WIDTH,
-        'height': HEIGHT,
-        'body': svg(WIDTH, HEIGHT),
-    }
+    title = "SVG Title"
+    body = svg(WIDTH, HEIGHT)
 
     if request.method == 'POST':
         form = TestForm(request.POST)
         if form.is_valid():
-            # button was pushed
-            # save the file
-            return 1/0
+            response = HttpResponse(mimetype="image/png")
+            response['Content-Disposition'] = 'attachment; filename="svg.png"'
+            print body
+            svg2png(bytestring=body, write_to=response)
+            return response
     else:
         form = TestForm()
 
     return render_to_response('home.html',
-                              {'form': form, 'svg': img},
+                              {'form': form, 'svg': {'title': title,
+                                                     'body': body}},
                               context_instance=RequestContext(request))
 
 
