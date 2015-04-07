@@ -25,8 +25,7 @@ def home(request):
         if form.is_valid():
             response = HttpResponse(mimetype="image/png")
             response['Content-Disposition'] = 'attachment; filename="svg.png"'
-            print body
-            svg2png(bytestring=body, write_to=response)
+            response.write(svg2png(bytestring=body, write_to=None))
             return response
     else:
         form = TestForm()
