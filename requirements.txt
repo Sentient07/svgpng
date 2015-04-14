@@ -3,3 +3,4 @@ Django>=1.6,<1.7
 cairocffi==0.6
 CairoSVG==1.0.13
 docker-compose==1.2.0
+selenium==2.45.0
