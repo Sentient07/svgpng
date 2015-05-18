@@ -23,7 +23,7 @@ def home(request):
     if request.method == 'POST':
         form = TestForm(request.POST)
         if form.is_valid():
-            response = HttpResponse(mimetype="image/png")
+            response = HttpResponse(content_type="image/png")
             response['Content-Disposition'] = 'attachment; filename="svg.png"'
             response.write(svg2png(bytestring=body, write_to=None))
             return response
