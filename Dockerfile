@@ -20,7 +20,20 @@ RUN yum -y update && yum -y install \
     python-setuptools \
     tar
 
-RUN npm -g install phantomjs
+# RUN npm -g install phantomjs
+
+RUN yum -y install git make flex bison gperf ruby \
+    openssl-devel freetype-devel fontconfig-devel libicu-devel \
+    sqlite-devel libpng-devel libjpeg-devel
+
+RUN git clone git://github.com/ariya/phantomjs.git && \
+    cd phantomjs && \
+    git checkout 1.9 && \
+    git reset --hard && \
+    ./build.sh --confirm && \
+    cp bin/phantomjs /usr/bin/phantomjs
+
+RUN npm -g install casperjs
 
 RUN easy_install pip
 
