@@ -12,7 +12,14 @@ var helper = require('./djangocasper.js');
 helper.scenario(
     '/', 
     function() {
-	this.test.assertSelectorHasText('input',
+	// The app has a single form.  Inside this form are two input widgets:
+	// * a hidden widget named "csrfmiddlewaretoken"
+	// * a submit widget named "Save as PNG"
+	// We test the presence of the first.
+	// We then try to retrieve the second.
+	// Our goal with the second is to submit it as a param in a POST request.
+	// The template for the POST request is in base64encode.
+	this.test.assertSelectorHasText('input[type="submit"]',
 					'Save as PNG', 
 					"The home page has a save button");
 	pngWeb = this.base64encode('/', 'POST', {
