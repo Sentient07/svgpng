@@ -116,6 +116,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'casper',
     'demo',
     'django.contrib.auth',
     'django.contrib.contenttypes',
