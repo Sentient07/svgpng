@@ -1,5 +1,5 @@
 """
-Django settings for svgpng2 project.
+Django settings for svgpng project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.6/topics/settings/
@@ -48,9 +48,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'svgpng2.urls'
+ROOT_URLCONF = 'svgpng.urls'
 
-WSGI_APPLICATION = 'svgpng2.wsgi.application'
+WSGI_APPLICATION = 'svgpng.wsgi.application'
 
 
 # Database
@@ -81,3 +81,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+)
