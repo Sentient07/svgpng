@@ -28,8 +28,11 @@ RUN yum -y install git make flex bison gperf ruby \
 
 RUN git clone git://github.com/ariya/phantomjs.git && \
     cd phantomjs && \
-    git checkout 1.9 && \
+    git checkout 1.9.8 && \
     git reset --hard && \
+    git config --global user.email "you@example.com" && \
+    git config --global user.name "Your Name" && \
+    git cherry-pick 016ae98b2b84ff972c775341ad7ea0551423761e && \
     ./build.sh --confirm && \
     cp bin/phantomjs /usr/bin/phantomjs
 
